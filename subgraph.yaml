@@ -1,0 +1,27 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Echo
+    network: mumbai
+    source:
+      address: "0xB149b57dD9EF08A9728612dAE867c2e602480D21"
+      abi: Echo
+      startBlock: 26906232
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Identity
+        - Message
+      abis:
+        - name: Echo
+          file: ./abis/Echo.json
+      eventHandlers:
+        - event: Identity(indexed address)
+          handler: handleIdentity
+        - event: Message(indexed address,string)
+          handler: handleMessage
+      file: ./src/echo.ts
